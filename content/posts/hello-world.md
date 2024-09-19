@@ -7,6 +7,8 @@ authorlink: https://ricolxwz.de
 cover: /img/6c6798dcd3c340f7e5b7b8518e9c2bb0.jpeg
 image:
   - /img/6c6798dcd3c340f7e5b7b8518e9c2bb0.jpeg
+nolastmod: true
+showPrevNext: false
+showTableOfContents: false
+showCover: true
 ---
-
-🌏 世界, 你好.
