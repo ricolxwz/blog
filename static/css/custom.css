@@ -14,3 +14,16 @@
 .wl-power {
     display: none;
 }
+
+a.wl-login-nick img {
+    margin: 0px;
+}
+
+
+.wl-login-info {
+    width: 105%;
+}
+
+.wl-panel {
+    width: 95%;
+}

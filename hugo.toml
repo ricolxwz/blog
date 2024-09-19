@@ -42,3 +42,4 @@ customJS = ["js/custom.js"]
 [markup]
 [markup.highlight]
 noClasses = false
+
