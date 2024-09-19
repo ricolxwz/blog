@@ -29,5 +29,9 @@ a.wl-login-nick img {
 }
 
 .wl-count {
+    margin-left: 0.4%;
+}
+
+.wl-card-item {
     margin-left: 0.8%;
 }
