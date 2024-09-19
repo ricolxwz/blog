@@ -1,0 +1,44 @@
+baseurl = 'https://blog.ricolxwz.de'
+title = '麦旋风超好吃'
+theme = 'dream'
+defaultContentLanguage = "zh"
+languageCode = "zh-Hans"
+
+[params]
+# zenMode = true
+lightTheme = "emerald"
+darkTheme = "forest"
+footerBottomText = "<div class='text-sm text-base-content/60'>采用 CC BY-NC 4.0 许可证发布</div>"
+rss = true
+motto = "繁星纵变 智慧永恒"
+author = "麦旋风超好吃"
+headerTitle = "麦旋风超好吃"
+avatar = "https://cdn.jsdelivr.net/gh/sigmax0124/logo@master/favicon-avatar.jpg"
+favicon = "https://cdn.jsdelivr.net/gh/sigmax0124/logo@master/favicon-avatar-round.png"
+siteStartYear = 2024
+email = "ricol.xwz@outlook.com"
+description = "麦旋风超好吃的生活小记"
+showTableOfContents = true
+showSummaryCoverInPost = true
+showPrevNextPost = true
+stickyNav = true
+reorderNavItems = ["github", "search", "rss", "posts", "categories", "tags"]
+collapseNavItems = ["posts", "categories", "tags", "rss"]
+waline = true
+walineServer = "https://waline.ricolxwz.io"
+customSyntaxHighlighting = true
+
+[params.navItems]
+github = { href = "https://github.com/ricolxwz", target = "_blank", icon = "logo-github", title = "GitHub" }
+
+[params.experimental]
+jsDate = true
+jsDateFormat = "yyyy年MM月dd日"
+
+[params.advanced]
+customCSS = ["css/custom.css"]
+customJS = ["js/custom.js"]
+
+[markup]
+[markup.highlight]
+noClasses = false

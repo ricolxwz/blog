@@ -1,0 +1,16 @@
+.highlight {
+    font-family: "UI Sans Mono", monospace;
+    font-size: 14px;
+}
+
+.katex {
+    font-size: 1em;
+}
+
+#dream-single-post-main {
+    max-width: 90ch;
+}
+
+.wl-power {
+    display: none;
+}
