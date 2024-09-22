@@ -1,5 +1,10 @@
 .highlight {
-    font-family: "UI Sans Mono", monospace;
+    font-family: "Mononoki", "HarmonyOS Sans";
+    font-size: 14px;
+}
+
+code {
+    font-family: "Mononoki", "HarmonyOS Sans";
     font-size: 14px;
 }
 
@@ -34,4 +39,8 @@ a.wl-login-nick img {
 
 .wl-card-item {
     margin-left: 0.8%;
+}
+
+body {
+    font-family: 'Mononoki', 'HarmonyOS Sans';
 }
