@@ -271,6 +271,8 @@ with-fingerprint
 ### 备份
 
 ```bash
+# 下面的-ao是--armor和--output的复合, 用于指定非二进制输出文件public-key.txt
+
 gpg -ao public-key.txt --export linus   # 导出公钥
 
 # 注意这里最后 要带上“!”,  不然会导出全部子密钥,  感谢@Dallas Lu 指正 
