@@ -261,6 +261,13 @@ ssb   rsa3072 2021-01-11 [E]
 ssb   rsa3072 2021-01-11 [S]
 ```
 
+默认不会输出子密钥的id, 而且没有指纹信息, 比较不安全, 所以在查看密钥的时候应该加上`--keyid-format long`输出长id, 加上`--fingerprint`输出指纹信息. 或者编辑GPG配置文件`~/.gnupg/gpg.conf`, 添加:
+
+```
+keyid-format 0xlong
+with-fingerprint
+```
+
 ### 备份
 
 ```bash
