@@ -369,9 +369,8 @@ gpg --sign-key recipient@example.com
 3. 修改git配置: `git config --global user.signingkey [KEYID]`
 4. 对提交进行签名: `git commit -S -m "you commit message"`
 5. 配置自动签名: `git config commit.gpgsign true`
-6. 引入Github公钥: Github网页端操作, 比如新建仓库, 提交等在本地无法验证这些签名, 这是因为网页端操作使用签名为Github平台自身的签名
-  1. 引入Github公钥: `curl https://github.com/web-flow.gpg | gpg --import`
-  2. 签署Github公钥: `gpg --lsign-key GitHub`
+6. 引入Github公钥: Github网页端操作, 比如新建仓库, 提交等在本地无法验证这些签名, 这是因为网页端操作使用签名为Github平台自身的签名, `curl https://github.com/web-flow.gpg | gpg --import`
+2. 签署Github公钥: `gpg --lsign-key GitHub`
 
 ## 信任网
 
