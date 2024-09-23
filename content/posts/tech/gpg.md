@@ -60,14 +60,246 @@ sudo pacman -S gnupg
 
 然后, 系统就会开始生成密钥, 这个时候要求你做一些随机的动作, 如敲打键盘, 移动鼠标, 读写硬盘之类的, 让随机数字生成器生成数字的熵更高. 几分钟之后, 系统就会提示密钥已经生成.
 
-生成好后, 可以使用`gpg -k`列出所有的公钥, `gpg -K`列出所有的私钥. 可以观察, 经过上述步骤后, 我们得到一个主密钥对, 和一个子密钥对. `pub`表示主公钥, `sec`表示主私钥, `sub`表示子公钥, `ssb`表示子私钥. 主密钥对和子密钥对的功能不同, 主密钥对由`[SC]`标识, 子密钥对由`[E]`标识, 这些字母的含义如下.
+生成好后, 可以使用`gpg -k`列出所有的公钥, `gpg -K`列出所有的私钥. 可以观察, 经过上述步骤后, 我们得到一个主密钥对, 和一个子密钥对. `pub`表示主公钥, `sec`表示主私钥, `sub`表示子公钥, `ssb`表示子私钥. 主密钥对和子密钥对的功能不同, 主密钥对通常由`[SC]`标识, 子密钥对通常由`[E]`标识, 这些字母的含义如下.
 
 |简称|全称|功能解释|
 |-|-|-|
-|`[C]`|Certify|认证其他的密钥|
+|`[C]`|Certify|认证其他的密钥, 生成证书|
 |`[S]`|Sign|签名|
 |`[E]`|Encrypt|加密|
 |`[A]`|Authenticate|身份认证|
+
+```bash
+# step 0 
+gpg --full-gen-key
+# 这里不推荐使用的 `gpg --gen-key`
+
+
+# step 1
+gpg (GnuPG) 2.2.20; Copyright (C) 2020 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+  (14) Existing key from card
+Your selection?
+#  默认就可以
+
+
+# step 2
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072)
+
+# 此处输入你希望的密钥长度,  RSA的不应低于2048 bits, 当然输入的数字越大越安全, 相应的, 加解密的速度也会更慢
+
+# step 3
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0)  2y
+
+# 默认可以选0 , 即永不过期,  这里我选了2y,   因为到期之前随时可以更改你的过期时间, 以确保你对此密钥仍拥有控制权
+
+# step 4
+Key expires at Wed 11 Jan 2023 05:50:53 PM CST
+Is this correct? (y/N) y
+
+#确定
+
+# step 5
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name:  linus   # 这里名字可以是网名, 可以是任意名字, 如果你注重隐私就不要输入自己真名了 
+Email address: linus@outlook.com  
+Comment:     # 备注可以留空
+
+# 注意了： 这里的邮箱,  如果你不打算使用PGP为你的Git记录认证,  这里其实是可以随便输入的, 不需要是你的邮箱,  甚至不需要是一个真实存在的邮箱, 只要接受你信息的人知道就行。隐私泄漏问题很严重, 你一旦设置了, 并且发布到公钥服务器, 就永远删不掉了 😅
+
+
+# step 6
+You selected this USER-ID:
+    "linus <linust@outlook.com>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+
+# 确认无误后输入 o
+
+# step 7
+┌──────────────────────────────────────────────────────┐
+│ Please enter the passphrase to                       											  │
+│ protect your new key                                                           │ 
+│                                                      │
+│ Passphrase: ________________________________________ 														 │
+│                                                      │
+│       <OK>                              <Cancel>     │
+└──────────────────────────────────────────────────────┘
+
+# 输入一个复杂的密码 并确认
+
+# step 8
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+# 随机移动你的鼠标, 越随机你的密钥越安全
+
+# step 9 大功告成
+                 
+gpg: key 99F583599B7E31F1 marked as ultimately trusted
+gpg: revocation certificate stored as '/root/.gnupg/openpgp-revocs.d/705358AB85366CAB05C0220F99F583599B7E31F1.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2021-01-11 [SC]
+      705358AB85366CAB05C0220F99F583599B7E31F1			 # 你的 key id
+uid                      linus <linus@outlook.com>
+sub   rsa3072 2021-01-11 [E] 		 # 这个是自动生成的用于加密的子密钥, E代表Encrypt 加密
+```
+
+## 主密钥和子密钥
+
+在GPG的架构中, 一般会有主密钥和子密钥之分. 为什么要有主密钥和子密钥之分? 这是因为主密钥非常重要, 别人一旦获得了主密钥的控制权, 就可以以你的名义通过主密钥签名任何文件, 或者签名新的子密钥生成其数字证书, 若你的主密钥用于签名他人的公钥, 攻击者可以使用它为不可信任的公钥签名, 这意味着在你的信任网络中的其他用户可能人为这些不可信的公钥是可靠的, 因为他们信任你的主密钥的签名, 这种情况下, 攻击者可以冒充身份, 传播不可靠的公钥. 为了实现职责分离, 会创建一个单独的子密钥, 这个子密钥对的公钥是由主密钥担保的, 即主密钥是信任链的顶端, 主密钥签发了子密钥的证书. 若子密钥被盗, 只需要吊销子密钥, 创建新的子密钥并签发证书即可. 
+
+### 生成子密钥
+
+```bash
+# step 0
+gpg --edit-key linus # 或者key id  
+
+# step 1  进入gpg交互界面	
+gpg (GnuPG) 2.2.20; Copyright (C) 2020 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Secret key is available.
+
+sec  rsa3072/99F583599B7E31F1
+     created: 2021-01-11  expires: never       usage: SC
+     trust: ultimate      validity: ultimate
+ssb  rsa3072/6FE9C71CFED44076
+     created: 2021-01-11  expires: never       usage: E
+[ultimate] (1). linus <linus@outlook.com>C
+
+# step 2  
+gpg>   addkey
+Please select what kind of key you want:
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (5) Elgamal (encrypt only)
+   (6) RSA (encrypt only)
+  (14) Existing key from card
+Your selection? 4   
+# 根据你的用途选择,  这里生成一个只用于签名的子密钥(sign only)
+
+#  后面的选择和主密钥生成的大同小异, 按提示操作即可
+
+# 生成完毕后
+sec  rsa3072/99F583599B7E31F1
+     created: 2021-01-11  expires: never       usage: SC
+     trust: ultimate      validity: ultimate
+ssb  rsa3072/6FE9C71CFED44076
+     created: 2021-01-11  expires: never       usage: E
+ssb  rsa3072/FDB960B857D397F6
+     created: 2021-01-11  expires: never       usage: S
+[ultimate] (1). linus <linus@outlook.com>
+
+#  last step
+gpg>  save  #  记得save,  直接退出的话什么也没有
+```
+
+### 生成撤销证书
+
+加入你忘记了主密钥的密码, 或者丢失了对主密钥的控制权, 如果没有撤销凭据的话, 除了一个个通知你的朋友们没有任何办法证明你已经不适用这个密钥, 这是灾难. 
+
+```bash
+# step 0
+gpg --gen-revoke -ao   revoke.pgp   linus # uid 或者key id
+
+# step 1
+sec  rsa3072/99F583599B7E31F1 2021-01-11 linus <linus@outlook.com>
+
+Create a revocation certificate for this key? (y/N) y
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here) 3
+
+# 按提示走完流程就可以
+```
+
+生成的`revoke.pgp`就是撤销凭证, 有了这个撤销凭证, 可以在没有密码的情况下使一个公钥失效.
+
+## 列出密钥
+
+```bash
+# 列出所有公钥、子公钥
+gpg --list-keys 
+# 列出所有密钥、子密钥
+gpg --list-secret-keys 
+
+# 简化命令
+gpg -k 
+gpg -K  
+
+
+# 输出 
+sec   rsa3072 2021-01-11 [SC]
+      705358AB85366CAB05C0220F99F583599B7E31F1
+uid           [ultimate] linus <linus@outlook.com>
+ssb   rsa3072 2021-01-11 [E]
+ssb   rsa3072 2021-01-11 [S]
+```
+
+### 备份
+
+```bash
+gpg -ao public-key.txt --export linus   # 导出公钥
+
+# 注意这里最后 要带上“!”,  不然会导出全部子密钥,  感谢@Dallas Lu 指正 
+gpg  -ao secret-key --export-secret-key 99F583599B7E31F1! 			# 导出主私钥, 建议secret-key 替换为你的加密设备备份文件的路径, 直接导入到设备中
+gpg  -ao sign-subkey --export-secret-subkeys FDB960B857D397F6!   	 #导出有[S]标识、签名用子私钥
+gpg  -ao encrypt-subkey --export-secret-subkeys 6FE9C71CFED44076!    #导出有[E]标识、加密用子私钥 ,这里的ID替换为你的子密钥ID
+
+
+# 别忘了同时将你刚刚生成的撤销凭证也备份起来
+```
+
+## 删除
+
+```bash
+gpg --delete-secret-keys linus  # 删除私钥,   UID 也可以替换成子密钥ID, 主密钥Key ID
+gpg --delete-keys linus		 # 删除公钥
+
+# 如果想全部删除推荐直接删文件夹,即删除 $HOME/.gnupg
+```
+
+## 导入
+
+```bash
+#从文件导入
+gpg --import [密钥文件]   # 刚刚备份的子密钥文件,  或者其他人的公钥
+
+# 暂不推荐从公钥服务器导入, 具体用法会在公钥服务器一章介绍
+# 这里先推荐 练习导入自己的子密钥
+
+
+ # 输出
+sec#   rsa3072/0x99F583599B7E31F1 2021-01-11 [SC]		 # sec 后面带有 # 号说明主密钥未导入, 是安全的
+      Key fingerprint = 7053 58AB 8536 6CAB 05C0  220F 99F5 8359 9B7E 31F1 #指纹信息
+uid                   [unknown] linus <linus@outlook.com>
+ssb #    rsa3072/0x6FE9C71CFED44076 2021-01-11 [E]           # 带有 # 号说明该子密钥已导入
+```
 
 ## 加密
 
@@ -79,6 +311,27 @@ sudo pacman -S gnupg
 4. Bobby使用Alice的公钥将明文"Ok!"加密, 发送给Alice
 5. Alice使用自己的私钥解密, 将密文还原为明文
 
+```bash
+# 加密：
+
+# recipient指定接收者的公钥ID
+gpg --recipient {keyid/uid} --output encrypt.txt --encrypt input.txt
+# 也可以按喜好加上--armor选项等
+
+# 我更喜欢用 
+gpg  -se  -o  encrypt.txt  -r  {keyid/uid}   input.txt  
+# s代表签名  e代表加密
+# o是 将结果 输出到文件  encrypt.txt
+# r后面跟 接收者的 uid或者 key id,  接收者的公钥必须已经导入过
+# input.txt 是你要加密的文件
+
+
+# 解密：
+gpg --decrypt encrypt.txt --output decrypt.txt
+# 也可以
+gpg -d encrypt.txt   # 输出到终端 直接查看
+```
+
 ## 签名
 
 还是上面那个例子.
@@ -86,6 +339,20 @@ sudo pacman -S gnupg
 1. 双方互换公钥
 2. Alice使用自己的私钥对文件进行签名, 发送给Bobby
 3. Bobby使用ALice的公钥验证Alice的签名, 提取文件
+
+```bash
+# 第一种方式, 生成二进制签名文件
+
+gpg --sign input.txt  # 当然也可以加上--output参数
+
+# 第二种方式, 生成ASCII格式签名
+gpg --clearsign input.txt
+
+# 第三种, 签名和原文本分开（前两种的签名文件中包含了所有原文本, 所以体积会比较大）
+gpg --armor --detach-sign input.txt  #不加armor生成会二进制
+
+#  验证签名文件
+```
 
 ### 信任网
 
@@ -120,6 +387,8 @@ KeyID是从密钥的指纹中提取出来的简化标识符, 用来快速查找�
 
 有个很厉害的程序姬Yegor Timoshenko, 写了个工具SKS-Exploit, 可以将任何人的GPG公钥损坏, 变得无法导入或者污染. 另外, 还能直接让KeyServer宕机. 
 
-> [1] UlyC. (2021, 一月 26). 2021年，用更现代的方法使用PGP（下）. C的博客 |UlyC. https://UlyC.github.io/2021/01/26/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8B/
+> [1] UlyC. (2021, 一月 26). 2021年, 用更现代的方法使用PGP（下）. C的博客 |UlyC. https://UlyC.github.io/2021/01/26/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8B/
 >
 > [2] 加密软件 GPG 入门教程 - 杨奇的博客. (不详). 取读于 2024年9月23日, 从 https://www.yangqi.show/posts/gpg-tutorial
+>
+> [3] UlyC. 《2021年, 用更现代的方法使用PGP（上）》. C的博客 |UlyC, 2021年1月13日, https://UlyC.github.io/2021/01/13/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8A/.
