@@ -119,3 +119,7 @@ KeyID是从密钥的指纹中提取出来的简化标识符, 用来快速查找�
 ##### 爆破
 
 有个很厉害的程序姬Yegor Timoshenko, 写了个工具SKS-Exploit, 可以将任何人的GPG公钥损坏, 变得无法导入或者污染. 另外, 还能直接让KeyServer宕机. 
+
+> [1] UlyC. (2021, 一月 26). 2021年，用更现代的方法使用PGP（下）. C的博客 |UlyC. https://UlyC.github.io/2021/01/26/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8B/
+>
+> [2] 加密软件 GPG 入门教程 - 杨奇的博客. (不详). 取读于 2024年9月23日, 从 https://www.yangqi.show/posts/gpg-tutorial
