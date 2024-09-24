@@ -386,7 +386,7 @@ gpg --sign-key recipient@example.com
 6. 引入Github公钥: Github网页端操作, 比如新建仓库, 提交等在本地无法验证这些签名, 这是因为网页端操作使用签名为Github平台自身的签名, `curl https://github.com/web-flow.gpg | gpg --import`
 2. 签署Github公钥: `gpg --lsign-key GitHub`
 
-### 解决macOS下无法签名问题
+### 解决macOS下无法输入密码问题
 
 需要安装pinetry, 是用于GnuPG的密码输入对话框.
 
@@ -394,6 +394,14 @@ gpg --sign-key recipient@example.com
 brew install pinentry-mac
 echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
 gpgconf --kill gpg-agent
+```
+
+### 解决Windows下找不到GPG问题
+
+首先确保安装Gpg4win, 然后引导git找到正确的可执行文件位置.
+
+```bash
+git config --global gpg.program "c:/Program Files (x86)/GnuPG/bin/gpg.exe"
 ```
 
 ## 信任网
