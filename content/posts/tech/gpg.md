@@ -386,6 +386,18 @@ gpg --sign-key recipient@example.com
 6. 引入Github公钥: Github网页端操作, 比如新建仓库, 提交等在本地无法验证这些签名, 这是因为网页端操作使用签名为Github平台自身的签名, `curl https://github.com/web-flow.gpg | gpg --import`
 2. 签署Github公钥: `gpg --lsign-key GitHub`
 
+### 解决macOS下无法签名问题
+
+需要安装pinetry, 是用于GnuPG的密码输入对话框.
+
+```bash
+brew upgrade gnupg  # This has a make step which takes a while
+brew link --overwrite gnupg
+brew install pinentry-mac
+echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
+killall gpg-agent
+```
+
 ## 信任网
 
 在使用GPG的时候, 确认自己得到的公钥是否属于正确的人非常重要, 因为公钥可能会通过MITM被替换. 为了证明公钥确实属于某个人, 常规的做法是引入CA机构, 由CA机构担保公钥的合法性, 类似于Https证书的机制. 然而GPG并没有采取这种机制, 而是采取了一种叫做信任网的方法, 它是一种去中心化的, 分布式的信任模型, 用户可以基于以下的方式构建对公钥的信任:
