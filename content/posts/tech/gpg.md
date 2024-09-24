@@ -391,11 +391,9 @@ gpg --sign-key recipient@example.com
 需要安装pinetry, 是用于GnuPG的密码输入对话框.
 
 ```bash
-brew upgrade gnupg  # This has a make step which takes a while
-brew link --overwrite gnupg
 brew install pinentry-mac
-echo "pinentry-program /usr/local/bin/pinentry-mac" >> ~/.gnupg/gpg-agent.conf
-killall gpg-agent
+echo "pinentry-program $(which pinentry-mac)" >> ~/.gnupg/gpg-agent.conf
+gpgconf --kill gpg-agent
 ```
 
 ## 信任网
