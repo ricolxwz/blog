@@ -365,8 +365,16 @@ gpgconf --kill gpg-agent
 
 首先确保安装Gpg4win, 然后引导git找到正确的可执行文件位置.
 
-```bash
+```powershell
 git config --global gpg.program "c:/Program Files (x86)/GnuPG/bin/gpg.exe"
+```
+
+### 解决Windows下无法输入密码问题
+
+编辑`C:\Users\wenzexu\appdata\local\gnupg\gpg.conf`文件.
+
+```powershell
+pinentry-mode loopback
 ```
 
 ## 信任网
