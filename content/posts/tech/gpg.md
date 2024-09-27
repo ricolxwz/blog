@@ -371,7 +371,7 @@ git config --global gpg.program "c:/Program Files (x86)/GnuPG/bin/gpg.exe"
 
 ### 解决Windows下无法输入密码问题
 
-编辑`C:\Users\wenzexu\appdata\local\gnupg\gpg.conf`文件.
+确保Kleopatra已经在运行, 编辑`C:\Users\wenzexu\appdata\local\gnupg\gpg.conf`文件.
 
 ```powershell
 pinentry-mode loopback
