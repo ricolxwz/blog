@@ -232,7 +232,7 @@ with-fingerprint
 ```
 
 
-### 备份
+## 备份
 
 注意这里最后要带上"!", 不然会导出全部子密钥.
 
@@ -301,6 +301,24 @@ gpg -d msg.gpg # 简化命令
 gpg --output msg.txt --decrypt msg.gpg # 输出到文件msg.txt
 # step 8: bobby也可以通过上述步骤传输密文
 ```
+
+## Cache
+
+GnuPG生成的密钥都有一个密码, Passphrase, 这个Passphrase是不用每次都输入的, 可以设置缓存时间.
+
+编辑`~/.gnupg/gpg-agent.conf`文件, 添加新行.
+
+```txt
+default-cache-ttl 86400
+max-cache-ttl 86400
+```
+
+其中:
+
+- `default-cache-ttl`: 这个定义的是不活动一段时间后仍然保持解锁的时间
+- `max-cache-ttl`: 这个定义的是即使密钥在一段时间内保持活动, 达到这个事件后也会强制要求输入密码
+
+然后, 重启agent: `gpgconf --kill gpg-agent`.
 
 ## 签名
 
