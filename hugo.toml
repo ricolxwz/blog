@@ -21,8 +21,6 @@ description = "麦旋风超好吃的生活小记"
 stickyNav = true
 reorderNavItems = ["github", "search", "rss", "posts", "categories", "tags"]
 collapseNavItems = ["posts", "categories", "tags", "rss"]
-waline = true
-walineServer = "https://waline.ricolxwz.io"
 customSyntaxHighlighting = true
 
 [params.navItems]
