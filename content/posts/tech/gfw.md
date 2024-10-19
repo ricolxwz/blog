@@ -14,7 +14,7 @@ tags:
   - 防火长城
 nolastmod: true
 showPrevNext: true
-showTableOfContents: true
+showTableOfContents: false
 showCover: false
 ---
 
