@@ -37,7 +37,3 @@ customJS = ["js/custom.js"]
 [markup]
 [markup.highlight]
 noClasses = false
-
-[services]
-[services.disqus]
-shortname = "mai-xuan-feng-chao-hao-chi-de-bo-ke"
