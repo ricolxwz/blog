@@ -18,7 +18,7 @@ showTableOfContents: false
 showCover: false
 ---
 
-GFW, Great Fire Wall, 是一道中国网络防火长城.
+GFW, Great Fire Wall, 越过长城, 走向世界.
 
 <!--more-->
 

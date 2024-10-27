@@ -1,46 +1,57 @@
 .highlight {
-    font-family: "Mononoki", "LXGWWenKaiMono";
-    font-size: 14px;
+  font-family: "Mononoki", "LXGWWenKaiMono";
+  font-size: 14px;
 }
 
 code {
-    font-family: "Mononoki", "LXGWWenKaiMono";
-    font-size: 14px;
+  font-family: "Mononoki", "LXGWWenKaiMono";
+  font-size: 14px;
 }
 
 .katex {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 #dream-single-post-main {
-    max-width: 90ch;
+  max-width: 90ch;
 }
 
 .wl-power {
-    display: none;
+  display: none;
 }
 
 a.wl-login-nick img {
-    margin: 0px;
+  margin: 0px;
 }
 
-
 .wl-login-info {
-    width: 105%;
+  width: 105%;
 }
 
 .wl-panel {
-    width: 95%;
+  width: 95%;
 }
 
 .wl-count {
-    margin-left: 0.4%;
+  margin-left: 0.4%;
 }
 
 .wl-card-item {
-    margin-left: 0.8%;
+  margin-left: 0.8%;
 }
 
 body {
-    font-family: 'Mononoki', 'LXGWWenKaiMono';
+  font-family: "Mononoki", "LXGWWenKaiMono";
+}
+
+[data-theme="emerald"] #disqus_thread {
+  color-scheme: none;
+  background-color: #fff;
+  color: #333c4d;
+}
+
+[data-theme="forest"] #disqus_thread {
+  color-scheme: none;
+  background-color: #171213;
+  color: #cbc9ca;
 }
