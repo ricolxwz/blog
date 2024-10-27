@@ -3,6 +3,7 @@ title: 对于传统计算机行业的思考
 date: 2024-10-27T21:33:40+11:00
 author: 麦旋风超好吃
 cover: /img/ede6d987177aa10de8fe5fc407eaf01d.webp
+avatar: https://cdn.jsdelivr.net/gh/sigmax0124/logo@master/favicon-avatar.jpg
 categories:
   - 就业
 tags:
