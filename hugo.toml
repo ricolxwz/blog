@@ -22,6 +22,8 @@ stickyNav = true
 reorderNavItems = ["github", "search", "rss", "posts", "categories", "tags"]
 collapseNavItems = ["posts", "categories", "tags", "rss"]
 customSyntaxHighlighting = true
+waline = true
+walineServer = "waline.ricolxwz.io"
 
 [params.navItems]
 github = { href = "https://github.com/ricolxwz", target = "_blank", icon = "logo-github", title = "GitHub" }
